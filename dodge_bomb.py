@@ -73,6 +73,8 @@ def main():
             kk_rct.move_ip(-sum_mv[0], -sum_mv[1])
 
         screen.blit(kk_img, kk_rct)
+        if kk_rct.colliderect(bb_rct):  # こうかとん爆弾の衝突判定
+            return  # ゲームオーバー
         bb_rct.move_ip(vx, vy)  # 爆弾移動
         yoko, tate =check_bound(bb_rct)
         if not yoko:  # 横方向にはみ出ていたら
