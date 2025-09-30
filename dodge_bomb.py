@@ -29,6 +29,10 @@ def check_bound(rct: pg.Rect) -> tuple[bool, bool]:
     return yoko, tate
 
 def gameover(screen: pg.Surface) -> None:
+          """
+          game overを表示させる関数
+
+          """
           kuro_img = pg.Surface((WIDTH,HEIGHT))  # 空のSurface
           pg.draw.rect(kuro_img,(0,0,0),(0,0,WIDTH,HEIGHT))  # 黒の四角を描画
           kuro_rct = kuro_img.get_rect()
