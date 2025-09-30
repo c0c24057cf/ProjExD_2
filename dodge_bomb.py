@@ -1,6 +1,7 @@
 import os
 import sys
 import random
+import time
 import pygame as pg
 
 
@@ -27,7 +28,33 @@ def check_bound(rct: pg.Rect) -> tuple[bool, bool]:
         tate = False
     return yoko, tate
 
+def gameover(screen: pg.Surface) -> None:
+          kuro_img = pg.Surface((WIDTH,HEIGHT))  # 空のSurface
+          pg.draw.rect(kuro_img,(0,0,0),(0,0,WIDTH,HEIGHT))  # 黒の四角を描画
+          kuro_rct = kuro_img.get_rect()
 
+          kuro_img.set_alpha(80)  # 透明
+
+          kuro_rct.centerx = WIDTH/2  # 座標横
+          kuro_rct.centery = HEIGHT/2  # 座標縦
+          screen.blit(kuro_img,[0,0])  # 黒描画
+
+            # 透明
+
+          
+          fonto = pg.font.Font(None, 80)  # gameover表示
+          txt = fonto.render("Game Over", True, (255,255,255))
+          kuro_img.blit(txt, [400,300])
+
+          hidari_img = pg.image.load("fig/8.png")  # 画像   
+          kuro_img.blit(hidari_img ,[100,100])
+          #_img = pg.transform.rotozoom(pg.image.load("fig/3.png"), 0, 0.9)
+
+          screen.blit(kuro_img,[0,0])
+          
+          pg.display.update()
+          time.sleep(5)
+    
 
 
 def main():
@@ -40,7 +67,7 @@ def main():
 
     bb_img =pg.SurfaceType((20,20))  # 空のSurface
     pg.draw.circle(bb_img,(255,0,0),(10,10),10)  # 赤い爆弾円
-    bb_img.set_colorkey((0,0,0))  # 四隅の黒い部分を投下
+    bb_img.set_colorkey((0,0,0))  # 四隅の黒い部分を透過
     bb_rct = bb_img.get_rect()  # 爆弾rect
     bb_rct.centerx = random.randint(0, WIDTH)  # 爆弾横座標 
     bb_rct.centery = random.randint(0, HEIGHT)  # 爆弾縦座標
@@ -74,7 +101,9 @@ def main():
 
         screen.blit(kk_img, kk_rct)
         if kk_rct.colliderect(bb_rct):  # こうかとん爆弾の衝突判定
-            return  # ゲームオーバー
+            
+            return gameover(screen) # ゲームオーバー
+        
         bb_rct.move_ip(vx, vy)  # 爆弾移動
         yoko, tate =check_bound(bb_rct)
         if not yoko:  # 横方向にはみ出ていたら
@@ -82,9 +111,20 @@ def main():
         if not tate:  # 縦方向にはみ出ていたら
             vy *= -1
         screen.blit(bb_img,bb_rct)  # 爆弾描画
+       # screen.blit(kuro_img,kuro_rct)
+       
         pg.display.update()
         tmr += 1
         clock.tick(50)
+       
+        
+
+       
+          
+         
+       
+        
+        
 
 
 if __name__ == "__main__":
