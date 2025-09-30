@@ -39,7 +39,7 @@ def gameover(screen: pg.Surface) -> None:
           kuro_rct.centery = HEIGHT/2  # 座標縦
           screen.blit(kuro_img,[0,0])  # 黒描画
 
-            # 透明
+            
 
           
           fonto = pg.font.Font(None, 80)  # gameover表示
